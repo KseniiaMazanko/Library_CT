@@ -47,13 +47,6 @@ public class AddNewBookLibrarian extends TestBase {
             WebElement signInButton = driver.findElement(By.cssSelector("#login-form > button"));
             signInButton.click();
 
-
-            //verifying before count
-            String beforeAddingABook = driver.findElement(By.cssSelector("[id='book_count']")).getText();
-            int numberBefore = Integer.parseInt(beforeAddingABook);
-            System.out.println("numberBefore = " + numberBefore);
-
-
             //When librarian click Books module
            WebElement booksModule = driver.findElement(By.xpath("//*[text()='Books']"));
            booksModule.click();
@@ -89,18 +82,14 @@ public class AddNewBookLibrarian extends TestBase {
             WebElement saveChanges = driver.findElement(By.cssSelector("button[type='submit']"));
             saveChanges.click();
 
-            Thread.sleep(3000);
+            //locating the pop up message to verify if the book was added
+            WebElement successMessage = driver.findElement(By.xpath("//div/div[@class= 'toast-message']"));
+            String actualResult = successMessage.getText();
+            String expectedResult = "The book has been created.";
 
-            //verifying after count
-            driver.get("https://library2.cybertekschool.com/login.html");
-            driver.navigate().refresh();
-            Thread.sleep(5000);
+            Assertions.assertEquals(expectedResult,actualResult);
+            Thread.sleep(7000);
 
-            String afterAddingABook = driver.findElement(By.cssSelector("[id='book_count']")).getText();
-            int numberAfter = Integer.parseInt(afterAddingABook);
-            System.out.println("numberAfter = " + numberAfter);
-
-            Assertions.assertTrue(numberBefore==numberAfter-1);
 
             //   user Logs Out because of the loop
             WebElement usernameLink = driver.findElement(By.cssSelector("li>a[href='#']"));
@@ -112,6 +101,34 @@ public class AddNewBookLibrarian extends TestBase {
 
 
 
+            //second approach to verify if the book was created by checking the before and after count
+             /*
+             //verifying before count
+            String beforeAddingABook = driver.findElement(By.cssSelector("[id='book_count']")).getText();
+            int numberBefore = Integer.parseInt(beforeAddingABook);
+            System.out.println("numberBefore = " + numberBefore);
+             */
+
+            /*
+            //verifying after count
+            driver.get("https://library2.cybertekschool.com/login.html");
+            driver.navigate().refresh();
+            Thread.sleep(5000);
+
+            String afterAddingABook = driver.findElement(By.cssSelector("[id='book_count']")).getText();
+            int numberAfter = Integer.parseInt(afterAddingABook);
+            System.out.println("numberAfter = " + numberAfter);
+
+            Assertions.assertTrue(numberBefore==numberAfter-1);
+             */
+
+
+
+
+
+
+
+            //never mind this
             /*
             Alert alert = driver.switchTo().alert(); // switch to alert
             String alertMessage= driver.switchTo().alert().getText(); // capture alert message
