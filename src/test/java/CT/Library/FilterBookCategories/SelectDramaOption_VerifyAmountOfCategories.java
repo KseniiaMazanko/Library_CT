@@ -2,6 +2,7 @@ package CT.Library.FilterBookCategories;
 
 
 import CT.Library.utility.TestBase;
+import CT.Library.utility.WebDriverUtility;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
@@ -79,12 +80,8 @@ public class SelectDramaOption_VerifyAmountOfCategories extends TestBase {
             Assertions.assertTrue(categoryObj.getFirstSelectedOption().getText().equals("Drama")&&listOfCategories.size()==21);
 
             //   user clicks Log Out
-            WebElement usernameLink = driver.findElement(By.cssSelector("li>a[href='#']"));
-            usernameLink.click();
 
-            Thread.sleep(1000);
-            WebElement logOutLink = driver.findElement(By.cssSelector("div>a[href='#']"));
-            logOutLink.click();
+            WebDriverUtility.logout(driver);
 
         }
     }

@@ -1,6 +1,7 @@
 package CT.Library.AddNewUser;
 
 import CT.Library.utility.TestBase;
+import CT.Library.utility.WebDriverUtility;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
@@ -120,12 +121,7 @@ public class AddNewUserLibrarian extends TestBase {
             Assertions.assertTrue(numberAfter==numberBefore+1);
 
             //   user Logs Out because of the loop
-            WebElement usernameLink = driver.findElement(By.cssSelector("li>a[href='#']"));
-            usernameLink.click();
-
-            Thread.sleep(1000);
-            WebElement logOutLink = driver.findElement(By.cssSelector("div>a[href='#']"));
-            logOutLink.click();
+            WebDriverUtility.logout(driver);
 
 
 

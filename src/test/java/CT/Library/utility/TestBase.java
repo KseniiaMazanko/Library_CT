@@ -21,11 +21,15 @@ public abstract class TestBase {
 
     }
 
+
+
     @AfterEach
     public void closeBrowser(){
-
         driver.quit();
     }
+
+
+
 
 
 
