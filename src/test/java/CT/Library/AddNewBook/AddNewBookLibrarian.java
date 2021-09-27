@@ -38,15 +38,7 @@ public class AddNewBookLibrarian extends TestBase {
             //Given librarian is on the homePage
             driver.navigate().to("http://library2.cybertekschool.com/login.html");
 
-            WebElement emailBox = driver.findElement(By.id("inputEmail"));
-            emailBox.sendKeys(eachLibrarian);
-
-            WebElement password = driver.findElement(By.id("inputPassword"));
-            password.sendKeys("Sdet2022*");
-
-
-            WebElement signInButton = driver.findElement(By.cssSelector("#login-form > button"));
-            signInButton.click();
+            WebDriverUtility.login(driver, eachLibrarian);
 
             //When librarian click Books module
            WebElement booksModule = driver.findElement(By.xpath("//*[text()='Books']"));

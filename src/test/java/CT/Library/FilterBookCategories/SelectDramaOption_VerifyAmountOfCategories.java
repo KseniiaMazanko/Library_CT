@@ -49,14 +49,7 @@ public class SelectDramaOption_VerifyAmountOfCategories extends TestBase {
 
             driver.get("http://library2.cybertekschool.com/login.html");
 
-            WebElement emailBox = driver.findElement(By.id("inputEmail"));
-            emailBox.sendKeys(eachUser);
-
-            WebElement password = driver.findElement(By.id("inputPassword"));
-            password.sendKeys("Sdet2022*");
-
-            WebElement signInButton = driver.findElement(By.cssSelector("#login-form > button"));
-            signInButton.click();
+           WebDriverUtility.login(driver, eachUser);
 
             //Given user is on the homePage
 

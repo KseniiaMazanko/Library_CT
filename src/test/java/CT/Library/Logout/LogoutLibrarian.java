@@ -3,6 +3,7 @@ package CT.Library.Logout;
 
 
 import CT.Library.utility.TestBase;
+import CT.Library.utility.WebDriverUtility;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -36,14 +37,7 @@ public class LogoutLibrarian extends TestBase {
 
             driver.get("http://library2.cybertekschool.com/login.html");
 
-            WebElement emailBox = driver.findElement(By.id("inputEmail"));
-            emailBox.sendKeys(eachLibrarian);
-
-            WebElement password = driver.findElement(By.id("inputPassword"));
-            password.sendKeys("Sdet2022*");
-
-            WebElement signInButton = driver.findElement(By.cssSelector("#login-form > button"));
-            signInButton.click();
+            WebDriverUtility.login(driver, eachLibrarian);
 
             //Given user is on the homePage
             Thread.sleep(3000);

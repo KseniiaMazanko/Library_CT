@@ -40,9 +40,10 @@ public class AddNewUserLibrarian extends TestBase {
 
         for (String eachLibrarian : librariansCredentials) {
 
+            driver.navigate().to("http://library2.cybertekschool.com/login.html");
 
             //Given librarian is on the homePage
-            driver.navigate().to("http://library2.cybertekschool.com/login.html");
+           /* driver.navigate().to("http://library2.cybertekschool.com/login.html");
 
             WebElement emailBox = driver.findElement(By.id("inputEmail"));
             emailBox.sendKeys(eachLibrarian);
@@ -53,6 +54,9 @@ public class AddNewUserLibrarian extends TestBase {
             WebElement signInButton = driver.findElement(By.cssSelector("#login-form > button"));
             signInButton.click();
 
+            */
+
+            WebDriverUtility.login(driver, eachLibrarian);
 
             //verifying before count
             String beforeAddingAUser = driver.findElement(By.cssSelector("#user_count")).getText();
