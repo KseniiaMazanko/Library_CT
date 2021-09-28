@@ -2,6 +2,7 @@ package CT.Library.AddNewUser;
 
 import CT.Library.utility.TestBase;
 import CT.Library.utility.WebDriverUtility;
+import com.github.javafaker.Faker;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
@@ -33,7 +34,6 @@ public class AddNewUserLibrarian extends TestBase {
 
 
 //
-
         @Test
         public void addNewUser() throws InterruptedException {
         ArrayList<String> librariansCredentials = new ArrayList<>(Arrays.asList("librarian43@library","librarian18@library"));
@@ -43,18 +43,6 @@ public class AddNewUserLibrarian extends TestBase {
             driver.navigate().to("http://library2.cybertekschool.com/login.html");
 
             //Given librarian is on the homePage
-           /* driver.navigate().to("http://library2.cybertekschool.com/login.html");
-
-            WebElement emailBox = driver.findElement(By.id("inputEmail"));
-            emailBox.sendKeys(eachLibrarian);
-
-            WebElement password = driver.findElement(By.id("inputPassword"));
-            password.sendKeys("Sdet2022*");
-
-            WebElement signInButton = driver.findElement(By.cssSelector("#login-form > button"));
-            signInButton.click();
-
-            */
 
             WebDriverUtility.login(driver, eachLibrarian);
 
@@ -70,6 +58,8 @@ public class AddNewUserLibrarian extends TestBase {
 
 
             //    And librarian click “+Add User” button
+            //generating fake data
+            Faker faker = new Faker();
 
             WebElement addANewUser = driver.findElement(By.xpath("//span/a"));
             addANewUser.click();
@@ -77,19 +67,14 @@ public class AddNewUserLibrarian extends TestBase {
             //When librarian enter full name, password, email and address
 
             WebElement fullName = driver.findElement(By.xpath("//input[@type='text' and @name='full_name']"));
-            fullName.sendKeys("Parker Peter");
+            fullName.sendKeys(faker.name().fullName());
 
             WebElement passwordUser = driver.findElement(By.cssSelector("input[name='password']"));
-            passwordUser.sendKeys("12345P");
+            passwordUser.sendKeys(faker.internet().password());
 
 
             WebElement email = driver.findElement(By.cssSelector("input[name='email']"));
-            if(eachLibrarian.equals("librarian43@library")) {
-                email.sendKeys("peterPark5@gmail.com");
-            }
-            else{
-                email.sendKeys("peterPark6@gmail.com");
-            }
+            email.sendKeys(faker.internet().emailAddress());
 
             WebElement userGroup = driver.findElement(By.id("user_group_id"));
             Select objGroup = new Select(userGroup);
@@ -100,9 +85,9 @@ public class AddNewUserLibrarian extends TestBase {
             objStatus.selectByVisibleText("ACTIVE");
 
             WebElement address = driver.findElement(By.id("address"));
-            address.sendKeys("10102 Park Ave, New York, NY, 10001");
+            address.sendKeys(faker.address().fullAddress());
 
-
+            Thread.sleep(3);
 
             //And librarian click save changes
 
@@ -126,7 +111,6 @@ public class AddNewUserLibrarian extends TestBase {
 
             //   user Logs Out because of the loop
             WebDriverUtility.logout(driver);
-
 
 
         }
