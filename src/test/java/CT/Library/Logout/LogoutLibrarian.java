@@ -2,7 +2,10 @@ package CT.Library.Logout;
 
 
 
+import CT.Library.utility.ConfigReader;
+import CT.Library.utility.Driver;
 import CT.Library.utility.TestBase;
+import CT.Library.utility.WebDriverUtility;
 import CT.Library.utility.WebDriverUtility;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
@@ -35,22 +38,22 @@ public class LogoutLibrarian extends TestBase {
 
             //String librarian1 = "librarian43@library";
 
-            driver.get("http://library2.cybertekschool.com/login.html");
+            Driver.getDriver().get(ConfigReader.read("url"));
 
-            WebDriverUtility.login(driver, eachLibrarian);
+            WebDriverUtility.login(Driver.getDriver(), eachLibrarian);
 
             //Given user is on the homePage
             Thread.sleep(3000);
 
             //When user click username on the right top corner
 
-            WebElement usernameLink = driver.findElement(By.cssSelector("li>a[href='#']"));
+            WebElement usernameLink = Driver.getDriver().findElement(By.cssSelector("li>a[href='#']"));
             usernameLink.click();
 
             //    And user click Log Out
 
             Thread.sleep(1000);
-            WebElement logOutLink = driver.findElement(By.cssSelector("div>a[href='#']"));
+            WebElement logOutLink = Driver.getDriver().findElement(By.cssSelector("div>a[href='#']"));
             logOutLink.click();
 
             Thread.sleep(3000);
@@ -58,7 +61,7 @@ public class LogoutLibrarian extends TestBase {
             //Then verify user navigate back to login page.
 
             String expectedResult = "https://library2.cybertekschool.com/login.html";
-            String actualResult = driver.getCurrentUrl();
+            String actualResult = Driver.getDriver().getCurrentUrl();
 
             //THIS works yay!
             assertEquals(expectedResult,actualResult);

@@ -1,6 +1,9 @@
 package CT.Library.AddNewUser;
 
+import CT.Library.utility.ConfigReader;
+import CT.Library.utility.Driver;
 import CT.Library.utility.TestBase;
+import CT.Library.utility.WebDriverUtility;
 import CT.Library.utility.WebDriverUtility;
 import com.github.javafaker.Faker;
 import org.junit.jupiter.api.Assertions;
@@ -40,20 +43,20 @@ public class AddNewUserLibrarian extends TestBase {
 
         for (String eachLibrarian : librariansCredentials) {
 
-            driver.navigate().to("http://library2.cybertekschool.com/login.html");
+            Driver.getDriver().navigate().to(ConfigReader.read("url"));
 
             //Given librarian is on the homePage
 
-            WebDriverUtility.login(driver, eachLibrarian);
+           WebDriverUtility.login(Driver.getDriver(), eachLibrarian);
 
             //verifying before count
-            String beforeAddingAUser = driver.findElement(By.cssSelector("#user_count")).getText();
+            String beforeAddingAUser = Driver.getDriver().findElement(By.cssSelector("#user_count")).getText();
             int numberBefore = Integer.parseInt(beforeAddingAUser);
             System.out.println("numberBefore = " + numberBefore);
 
 
             //When librarian click Books module
-            WebElement usersModule = driver.findElement(By.xpath("//*[text()='Users']"));
+            WebElement usersModule = Driver.getDriver().findElement(By.xpath("//*[text()='Users']"));
             usersModule.click();
 
 
@@ -61,48 +64,48 @@ public class AddNewUserLibrarian extends TestBase {
             //generating fake data
             Faker faker = new Faker();
 
-            WebElement addANewUser = driver.findElement(By.xpath("//span/a"));
+            WebElement addANewUser = Driver.getDriver().findElement(By.xpath("//span/a"));
             addANewUser.click();
 
             //When librarian enter full name, password, email and address
 
-            WebElement fullName = driver.findElement(By.xpath("//input[@type='text' and @name='full_name']"));
+            WebElement fullName = Driver.getDriver().findElement(By.xpath("//input[@type='text' and @name='full_name']"));
             fullName.sendKeys(faker.name().fullName());
 
-            WebElement passwordUser = driver.findElement(By.cssSelector("input[name='password']"));
+            WebElement passwordUser = Driver.getDriver().findElement(By.cssSelector("input[name='password']"));
             passwordUser.sendKeys(faker.internet().password());
 
 
-            WebElement email = driver.findElement(By.cssSelector("input[name='email']"));
+            WebElement email = Driver.getDriver().findElement(By.cssSelector("input[name='email']"));
             email.sendKeys(faker.internet().emailAddress());
 
-            WebElement userGroup = driver.findElement(By.id("user_group_id"));
+            WebElement userGroup = Driver.getDriver().findElement(By.id("user_group_id"));
             Select objGroup = new Select(userGroup);
             objGroup.selectByValue("3");
 
-            WebElement status = driver.findElement(By.id("status"));
+            WebElement status = Driver.getDriver().findElement(By.id("status"));
             Select objStatus = new Select(status);
             objStatus.selectByVisibleText("ACTIVE");
 
-            WebElement address = driver.findElement(By.id("address"));
+            WebElement address = Driver.getDriver().findElement(By.id("address"));
             address.sendKeys(faker.address().fullAddress());
 
             Thread.sleep(3);
 
             //And librarian click save changes
 
-            WebElement submitBtn = driver.findElement(By.cssSelector("button[type='submit']"));
+            WebElement submitBtn = Driver.getDriver().findElement(By.cssSelector("button[type='submit']"));
             submitBtn.submit();
 
             Thread.sleep(4000);
 
-            driver.navigate().to("https://library2.cybertekschool.com/#dashboard");
-            driver.navigate().refresh();
+            Driver.getDriver().navigate().to("https://library2.cybertekschool.com/#dashboard");
+            Driver.getDriver().navigate().refresh();
             Thread.sleep(3000);
 
             //Then verify a new user is created
 
-            String afterAddingTheUser = driver.findElement(By.cssSelector("#user_count")).getText();
+            String afterAddingTheUser = Driver.getDriver().findElement(By.cssSelector("#user_count")).getText();
             int numberAfter = Integer.parseInt(afterAddingTheUser);
             System.out.println("numberAfter = " + numberAfter);
 
@@ -110,7 +113,7 @@ public class AddNewUserLibrarian extends TestBase {
             Assertions.assertTrue(numberAfter==numberBefore+1);
 
             //   user Logs Out because of the loop
-            WebDriverUtility.logout(driver);
+            WebDriverUtility.logout(Driver.getDriver());
 
 
         }

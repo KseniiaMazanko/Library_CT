@@ -1,7 +1,10 @@
 package CT.Library.AddNewBook;
 
+import CT.Library.utility.ConfigReader;
+import CT.Library.utility.Driver;
 import CT.Library.utility.TestBase;
 import CT.Library.utility.WebDriverUtility;
+import com.github.javafaker.Faker;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
@@ -36,47 +39,48 @@ public class AddNewBookLibrarian extends TestBase {
         for (String eachLibrarian : librariansCredentials) {
 
             //Given librarian is on the homePage
-            driver.navigate().to("http://library2.cybertekschool.com/login.html");
+            Driver.getDriver().navigate().to(ConfigReader.read("url"));
 
-            WebDriverUtility.login(driver, eachLibrarian);
+            WebDriverUtility.login(Driver.getDriver(), eachLibrarian);
 
             //When librarian click Books module
-           WebElement booksModule = driver.findElement(By.xpath("//*[text()='Books']"));
+           WebElement booksModule = Driver.getDriver().findElement(By.xpath("//*[text()='Books']"));
            booksModule.click();
 
 
             //And librarian click “+Add Book” button
-           WebElement addBook = driver.findElement(By.xpath("//*[@id=\"books\"]/div[1]/div[1]/span/a"));
+           WebElement addBook = Driver.getDriver().findElement(By.xpath("//*[@id=\"books\"]/div[1]/div[1]/span/a"));
            addBook.click();
 
+           Faker faker = new Faker();
 
             //When librarian enter BookName, ISBN, Year, Author, and Description
-            WebElement book = driver.findElement(By.name("name"));
-            book.sendKeys("Rich Dad Poor Dad");
+            WebElement book = Driver.getDriver().findElement(By.name("name"));
+            book.sendKeys(faker.book().title());
 
-            WebElement ISBN = driver.findElement(By.name("isbn"));
-            ISBN.sendKeys("9780446677455");
+            WebElement ISBN = Driver.getDriver().findElement(By.name("isbn"));
+            ISBN.sendKeys(faker.idNumber().valid());
 
-            WebElement year = driver.findElement(By.name("year"));
-            year.sendKeys("1997");
+            WebElement year = Driver.getDriver().findElement(By.name("year"));
+            year.sendKeys("1995");
 
-            WebElement author = driver.findElement(By.xpath("//*[@id=\"add_book_form\"]/div[1]/div/div[2]/div[1]/div/input"));
-            author.sendKeys("Robert Kiyosaki");
+            WebElement author = Driver.getDriver().findElement(By.xpath("//*[@id=\"add_book_form\"]/div[1]/div/div[2]/div[1]/div/input"));
+            author.sendKeys(faker.book().author());
 
-            WebElement genre = driver.findElement(By.id("book_group_id"));
+            WebElement genre = Driver.getDriver().findElement(By.id("book_group_id"));
             Select genreObj = new Select(genre);
             genreObj.selectByValue("14");
 
-            WebElement description = driver.findElement(By.id("description"));
+            WebElement description = Driver.getDriver().findElement(By.id("description"));
             description.sendKeys("The book advocates the importance of financial literacy");
 
             Thread.sleep(2000);
 
-            WebElement saveChanges = driver.findElement(By.cssSelector("button[type='submit']"));
+            WebElement saveChanges = Driver.getDriver().findElement(By.cssSelector("button[type='submit']"));
             saveChanges.click();
 
             //locating the pop up message to verify if the book was added
-            WebElement successMessage = driver.findElement(By.xpath("//div/div[@class= 'toast-message']"));
+            WebElement successMessage = Driver.getDriver().findElement(By.xpath("//div/div[@class= 'toast-message']"));
             String actualResult = successMessage.getText();
             String expectedResult = "The book has been created.";
 
@@ -85,7 +89,7 @@ public class AddNewBookLibrarian extends TestBase {
 
 
             //   user Logs Out because of the loop
-            WebDriverUtility.logout(driver);
+            WebDriverUtility.logout(Driver.getDriver());
 
 
 

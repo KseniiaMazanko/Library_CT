@@ -1,7 +1,10 @@
 package CT.Library.FilterBookCategories;
 
 
+import CT.Library.utility.ConfigReader;
+import CT.Library.utility.Driver;
 import CT.Library.utility.TestBase;
+import CT.Library.utility.WebDriverUtility;
 import CT.Library.utility.WebDriverUtility;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -47,18 +50,18 @@ public class SelectDramaOption_VerifyAmountOfCategories extends TestBase {
 
         for (String eachUser : credentials) {
 
-            driver.get("http://library2.cybertekschool.com/login.html");
+            Driver.getDriver().get(ConfigReader.read("url"));
 
-           WebDriverUtility.login(driver, eachUser);
+           WebDriverUtility.login(Driver.getDriver(), eachUser);
 
             //Given user is on the homePage
 
             //When user click Books module
-            WebElement booksModule = driver.findElement(By.xpath("//*[text()='Books']"));
+            WebElement booksModule = Driver.getDriver().findElement(By.xpath("//*[text()='Books']"));
             booksModule.click();
 
             //And user click book category dropdown
-            WebElement bookCategories = driver.findElement(By.id("book_categories"));
+            WebElement bookCategories = Driver.getDriver().findElement(By.id("book_categories"));
             bookCategories.click();
 
             //locating the ListOfCategories
@@ -74,7 +77,7 @@ public class SelectDramaOption_VerifyAmountOfCategories extends TestBase {
 
             //   user clicks Log Out
 
-            WebDriverUtility.logout(driver);
+            WebDriverUtility.logout(Driver.getDriver());
 
         }
     }

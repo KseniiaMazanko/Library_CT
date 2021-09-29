@@ -2,7 +2,10 @@ package CT.Library.LoginStory;
 
 
 
+import CT.Library.utility.ConfigReader;
+import CT.Library.utility.Driver;
 import CT.Library.utility.TestBase;
+import CT.Library.utility.WebDriverUtility;
 import CT.Library.utility.WebDriverUtility;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -35,33 +38,33 @@ public class StudentLoginsSuccessfully extends TestBase {
 
         for (String eachStudent : studentsCredentials) {
 
-            driver.get("http://library2.cybertekschool.com/login.html");
+            Driver.getDriver().get(ConfigReader.read("url"));
 
             //Then verify that the URL is “https://library2.cybertekschool.com/login.html”
-            String currentResult = driver.getCurrentUrl();
+            String currentResult = Driver.getDriver().getCurrentUrl();
             String expectedResult = "https://library2.cybertekschool.com/login.html";
 
             Assertions.assertEquals(expectedResult,currentResult);
 
             //When student enters valid email address and password
-            WebElement email = driver.findElement(By.id("inputEmail"));
+            WebElement email = Driver.getDriver().findElement(By.id("inputEmail"));
             email.sendKeys(eachStudent);
-            WebElement password = driver.findElement(By.id("inputPassword"));
+            WebElement password = Driver.getDriver().findElement(By.id("inputPassword"));
             password.sendKeys("Sdet2022*");
 
             //And student click sign in button
-            WebElement signInButton = driver.findElement(By.xpath("//button[text()='Sign in']"));
+            WebElement signInButton = Driver.getDriver().findElement(By.xpath("//button[text()='Sign in']"));
             signInButton.click();
 
             Thread.sleep(3000);
 
             //Then verify that there are 2 modules on the page
-            List<WebElement> modules = driver.findElements(By.xpath("//li[@class='nav-item']"));
+            List<WebElement> modules = Driver.getDriver().findElements(By.xpath("//li[@class='nav-item']"));
 
             Assertions.assertTrue(modules.size()==2);
 
             //   user Logs Out because of the loop!
-            WebDriverUtility.logout(driver);
+            WebDriverUtility.logout(Driver.getDriver());
 
 
         }

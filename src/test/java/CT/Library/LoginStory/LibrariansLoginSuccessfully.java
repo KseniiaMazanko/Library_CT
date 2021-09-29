@@ -2,7 +2,10 @@ package CT.Library.LoginStory;
 
 
 
+import CT.Library.utility.ConfigReader;
+import CT.Library.utility.Driver;
 import CT.Library.utility.TestBase;
+import CT.Library.utility.WebDriverUtility;
 import CT.Library.utility.WebDriverUtility;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -39,36 +42,36 @@ public class LibrariansLoginSuccessfully extends TestBase {
         ArrayList<String> librariansCredentials = new ArrayList<>(Arrays.asList("librarian43@library","librarian18@library"));
         for (String eachLibrarian : librariansCredentials) {
 
-            driver.navigate().to("http://library2.cybertekschool.com/login.html");
+            Driver.getDriver().get(ConfigReader.read("url"));
 
             //Then verify that the title is “Login - Library”
             String expectedResult = "Login - Library";
-            String currentResult = driver.getTitle();
+            String currentResult = Driver.getDriver().getTitle();
 
            Assertions.assertEquals(expectedResult, currentResult);
 
            // When librarian enters valid email address and password
 
-            WebElement emailBox = driver.findElement(By.id("inputEmail"));
+            WebElement emailBox = Driver.getDriver().findElement(By.id("inputEmail"));
             emailBox.sendKeys(eachLibrarian);
 
-            WebElement password = driver.findElement(By.id("inputPassword"));
+            WebElement password = Driver.getDriver().findElement(By.id("inputPassword"));
             password.sendKeys("Sdet2022*");
 
 
             //And librarian click sign in button
-            WebElement signInButton = driver.findElement(By.cssSelector("#login-form > button"));
+            WebElement signInButton = Driver.getDriver().findElement(By.cssSelector("#login-form > button"));
             signInButton.click();
 
 
             //Then verify that there are 3 modules the page
-            List<WebElement> modules = driver.findElements(By.xpath("//li[@class='nav-item']"));
+            List<WebElement> modules = Driver.getDriver().findElements(By.xpath("//li[@class='nav-item']"));
 
 
             Assertions.assertTrue(modules.size()==3);
 
             //   user Logs Out because of the loop!
-            WebDriverUtility.logout(driver);
+            WebDriverUtility.logout(Driver.getDriver());
 
         }
 

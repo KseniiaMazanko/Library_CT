@@ -1,7 +1,10 @@
 package CT.Library.SelectStatus;
 
 
+import CT.Library.utility.ConfigReader;
+import CT.Library.utility.Driver;
 import CT.Library.utility.TestBase;
+import CT.Library.utility.WebDriverUtility;
 import CT.Library.utility.WebDriverUtility;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -36,18 +39,18 @@ public class SelectStatusLibrarian extends TestBase {
 
             //Given librarian is on the homePage
 
-            driver.get("http://library2.cybertekschool.com/login.html");
+            Driver.getDriver().get(ConfigReader.read("url"));
 
-            WebDriverUtility.login(driver, eachLibrarian);
+            WebDriverUtility.login(Driver.getDriver(), eachLibrarian);
 
 
             //When librarian click Users module
-            WebElement userModule = driver.findElement(By.xpath("//li/a[@href='#users']"));
+            WebElement userModule = Driver.getDriver().findElement(By.xpath("//li/a[@href='#users']"));
             userModule.click();
 
 
             //And librarian click Status dropdown
-            WebElement statusSelect = driver.findElement(By.id("user_status"));
+            WebElement statusSelect = Driver.getDriver().findElement(By.id("user_status"));
             statusSelect.click();
 
 
@@ -60,7 +63,7 @@ public class SelectStatusLibrarian extends TestBase {
 
 
             //   user Logs Out because of the loop!
-            WebDriverUtility.logout(driver);
+            WebDriverUtility.logout(Driver.getDriver());
 
         }
 
